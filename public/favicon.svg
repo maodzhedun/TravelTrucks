@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="#E44848"/>
+  
+  <!-- Camper van body -->
+  <rect x="12" y="26" width="32" height="18" rx="3" fill="#FFFFFF"/>
+  
+  <!-- Camper cabin -->
+  <path d="M44 26 L44 22 Q44 18 48 18 L52 18 Q56 18 56 22 L56 38 Q56 42 52 42 L52 44 L44 44 L44 26Z" fill="#FFFFFF"/>
+  
+  <!-- Window on cabin -->
+  <rect x="47" y="22" width="6" height="6" rx="1" fill="#E44848"/>
+  
+  <!-- Side window -->
+  <rect x="16" y="30" width="10" height="6" rx="1" fill="#E44848"/>
+  
+  <!-- Roof rack/pop-top hint -->
+  <rect x="14" y="22" width="20" height="4" rx="2" fill="#FFFFFF"/>
+  
+  <!-- Wheels -->
+  <circle cx="22" cy="44" r="5" fill="#101828"/>
+  <circle cx="22" cy="44" r="2" fill="#FFFFFF"/>
+  <circle cx="48" cy="44" r="5" fill="#101828"/>
+  <circle cx="48" cy="44" r="2" fill="#FFFFFF"/>
+  
+  <!-- Road line -->
+  <rect x="8" y="50" width="48" height="2" rx="1" fill="#FFFFFF" opacity="0.6"/>
+</svg>

@@ -1,0 +1,124 @@
+.page {
+  min-height: calc(100vh - 80px);
+  padding: var(--space-48) 0;
+  background-color: var(--color-white);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--space-64);
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  text-align: center;
+  padding: var(--space-48);
+}
+
+.error h2 {
+  font-size: var(--text-32);
+  color: var(--color-main);
+  margin-bottom: var(--space-16);
+}
+
+.error p {
+  font-size: var(--text-18);
+  color: var(--color-text-muted);
+}
+
+/* Header */
+.header {
+  margin-bottom: var(--space-24);
+}
+
+.name {
+  font-size: var(--text-24);
+  font-weight: 600;
+  color: var(--color-main);
+  margin-bottom: var(--space-8);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  margin-bottom: var(--space-8);
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ratingText {
+  font-size: var(--text-16);
+  color: var(--color-main);
+  text-decoration: underline;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--text-16);
+  color: var(--color-main);
+}
+
+.price {
+  font-size: var(--text-24);
+  font-weight: 600;
+  color: var(--color-main);
+}
+
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-48);
+  margin-bottom: var(--space-24);
+}
+
+.imageWrapper {
+  position: relative;
+  aspect-ratio: 1.36;
+  border-radius: var(--radius-10);
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* Description */
+.description {
+  font-size: var(--text-16);
+  color: var(--color-text);
+  line-height: 1.5;
+  margin-bottom: var(--space-44);
+}
+
+/* Content */
+.content {
+  display: flex;
+  gap: var(--space-40);
+}
+
+.tabsWrapper {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-44);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-12);
+}
+
+.sidebar {
+  width: 448px;
+  flex-shrink: 0;
+}

@@ -1,0 +1,57 @@
+.header {
+  position: relative;
+  background-color: var(--color-white);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: var(--space-20) var(--space-64);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: var(--text-20);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  transition: opacity var(--transition);
+}
+
+.logo:hover {
+  opacity: 0.85;
+}
+
+.logoTravel {
+  color: var(--color-main);
+}
+
+.logoTrucks {
+  color: var(--color-text);
+}
+
+.nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-32);
+}
+
+.navLink {
+  font-size: var(--text-16);
+  font-weight: 500;
+  color: var(--color-main);
+  transition: color var(--transition);
+}
+
+.navLink:hover {
+  color: var(--color-primary);
+}
+
+.navLink.active {
+  color: var(--color-primary);
+}

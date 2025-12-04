@@ -1,0 +1,58 @@
+/* Hero.module.css */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 590px; /* Фіксована висота як в макеті */
+  background-image: url('/Hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--space-64);
+  width: 100%;
+}
+
+.title {
+  font-size: var(--text-48);
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: var(--space-16);
+  max-width: 600px; /* Збільшено щоб заголовок був в один рядок */
+  line-height: 1.15;
+  white-space: nowrap; /* Запобігає переносу */
+}
+
+.subtitle {
+  font-size: var(--text-24);
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: var(--space-40);
+  max-width: 520px;
+  line-height: 1.33;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 173px;
+  height: 56px;
+  padding: 0 var(--space-48);
+  font-size: var(--text-16);
+  font-weight: 500;
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-radius: var(--radius-200);
+  transition: background-color var(--transition);
+}
+
+.button:hover {
+  background-color: var(--color-primary-hover);
+}

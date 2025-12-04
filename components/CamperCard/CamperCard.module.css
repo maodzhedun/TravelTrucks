@@ -1,0 +1,134 @@
+.card {
+  display: flex;
+  gap: var(--space-24);
+  padding: var(--space-24);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-12);
+}
+
+.imageWrapper {
+  position: relative;
+  flex-shrink: 0;
+  width: 292px;
+  height: 320px;
+  border-radius: var(--radius-10);
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-8);
+}
+
+.name {
+  font-size: var(--text-24);
+  font-weight: 600;
+  color: var(--color-main);
+  line-height: 1.25;
+}
+
+.priceWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+}
+
+.price {
+  font-size: var(--text-24);
+  font-weight: 600;
+  color: var(--color-main);
+}
+
+.favoriteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform var(--transition);
+}
+
+.favoriteBtn:hover {
+  transform: scale(1.1);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  margin-bottom: var(--space-16);
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ratingText {
+  font-size: var(--text-16);
+  color: var(--color-main);
+  text-decoration: underline;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--text-16);
+  color: var(--color-main);
+}
+
+.description {
+  font-size: var(--text-16);
+  color: var(--color-text);
+  line-height: 1.5;
+  margin-bottom: var(--space-16);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-bottom: var(--space-24);
+}
+
+.showMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: 48px;
+  padding: 0 var(--space-40);
+  font-size: var(--text-16);
+  font-weight: 500;
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-radius: var(--radius-200);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition);
+  margin-top: auto;
+}
+
+.showMoreBtn:hover {
+  background-color: var(--color-primary-hover);
+}
