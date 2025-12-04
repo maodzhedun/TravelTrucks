@@ -1,124 +1,201 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import { Filters as FiltersType } from '@/types/camper';
-import { useCampersStore } from '@/store/useCampersStore';
-import styles from './Filters.module.css';
+import { useState } from "react";
+import { Filters } from "@/types/camper";
+import styles from "./Filters.module.css";
 
-// Icons for filters
+// SVG Icons
 const icons = {
   location: (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#6C717B" strokeWidth="1.5">
-      <path d="M10 10.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-      <path d="M10 17s6-4 6-8.5a6 6 0 1 0-12 0c0 4.5 6 8.5 6 8.5Z" />
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path
+        d="M10 10.833a2.083 2.083 0 1 0 0-4.166 2.083 2.083 0 0 0 0 4.166Z"
+        stroke="#6C717B"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M10 17.5s6.25-4.375 6.25-8.75a6.25 6.25 0 1 0-12.5 0c0 4.375 6.25 8.75 6.25 8.75Z"
+        stroke="#6C717B"
+        strokeWidth="1.5"
+      />
     </svg>
   ),
   ac: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#101828" strokeWidth="1.8">
-      <path d="M16 6v20M10 10c3.5-3.5 8.5-3.5 12 0M10 22c3.5 3.5 8.5 3.5 12 0" />
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path
+        d="M16 4v24M16 4l4 4M16 4l-4 4M16 28l4-4M16 28l-4-4"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6 10l17.32 10M6 10l1 5.66M6 10l5.66 1M23.32 20l-1-5.66M23.32 20l-5.66-1"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6 22l17.32-10M6 22l5.66-1M6 22l1-5.66M23.32 12l-5.66 1M23.32 12l-1 5.66"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   ),
   automatic: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#101828" strokeWidth="1.8">
-      <circle cx="16" cy="16" r="4" />
-      <path d="M16 6v3M16 23v3M6 16h3M23 16h3M8.93 8.93l2.12 2.12M20.95 20.95l2.12 2.12M8.93 23.07l2.12-2.12M20.95 11.05l2.12-2.12" />
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <circle cx="16" cy="16" r="5.25" stroke="#101828" strokeWidth="1.5" />
+      <path
+        d="M16 4v3M16 25v3M4 16h3M25 16h3M7.76 7.76l2.12 2.12M22.12 22.12l2.12 2.12M7.76 24.24l2.12-2.12M22.12 9.88l2.12-2.12"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
     </svg>
   ),
   kitchen: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#101828" strokeWidth="1.8">
-      <path d="M6 6v8a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3V6M9 6v20M23 6v3a4 4 0 0 1 4 4v2a2 2 0 0 1-2 2h-2M23 17v9" />
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path
+        d="M10 6v8a4 4 0 0 0 4 4h0a4 4 0 0 0 4-4V6M12 6v20M20 6v4a4 4 0 0 0 4 4h0V6"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   ),
   tv: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#101828" strokeWidth="1.8">
-      <rect x="4" y="9" width="24" height="16" rx="2" />
-      <path d="M12 4l4 5 4-5" />
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <rect
+        x="4"
+        y="8"
+        width="24"
+        height="16"
+        rx="2"
+        stroke="#101828"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M20 4l-4 4-4-4"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   ),
   bathroom: (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#101828" strokeWidth="1.8">
-      <path d="M6 16h20M6 16V10a3 3 0 0 1 3-3h3M6 16v5a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-5" />
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path
+        d="M6 16h20M6 16v-6a4 4 0 0 1 4-4h4M6 16v6a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-6"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
     </svg>
   ),
   van: (
-    <svg width="40" height="28" viewBox="0 0 40 28" fill="none" stroke="#101828" strokeWidth="1.8">
-      <rect x="1" y="4" width="28" height="18" rx="2" />
-      <path d="M29 10h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7" />
-      <circle cx="9" cy="22" r="3" />
-      <circle cx="33" cy="22" r="3" />
+    <svg width="40" height="28" viewBox="0 0 40 28" fill="none">
+      <path
+        d="M32.5 20h3c1.38 0 2.5-1.12 2.5-2.5v-5c0-.95-.53-1.82-1.38-2.24l-6.12-3.06V5.5c0-1.38-1.12-2.5-2.5-2.5H5.5C4.12 3 3 4.12 3 5.5v12c0 1.38 1.12 2.5 2.5 2.5h2"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <circle cx="11" cy="21" r="3" stroke="#101828" strokeWidth="1.5" />
+      <circle cx="29" cy="21" r="3" stroke="#101828" strokeWidth="1.5" />
+      <path d="M14 21h12" stroke="#101828" strokeWidth="1.5" />
     </svg>
   ),
   fullyIntegrated: (
-    <svg width="40" height="28" viewBox="0 0 40 28" fill="none" stroke="#101828" strokeWidth="1.8">
-      <path d="M4 22V8a4 4 0 0 1 4-4h24a4 4 0 0 1 4 4v14" />
-      <path d="M4 22h32" />
-      <circle cx="10" cy="22" r="3" />
-      <circle cx="30" cy="22" r="3" />
-      <rect x="10" y="8" width="20" height="8" rx="1" />
+    <svg width="40" height="28" viewBox="0 0 40 28" fill="none">
+      <rect
+        x="3"
+        y="5"
+        width="34"
+        height="15"
+        rx="2"
+        stroke="#101828"
+        strokeWidth="1.5"
+      />
+      <circle cx="11" cy="21" r="3" stroke="#101828" strokeWidth="1.5" />
+      <circle cx="29" cy="21" r="3" stroke="#101828" strokeWidth="1.5" />
+      <path
+        d="M14 21h12M28 5v-2h4v2M8 9h6M8 13h4"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
     </svg>
   ),
   alcove: (
-    <svg width="40" height="28" viewBox="0 0 40 28" fill="none" stroke="#101828" strokeWidth="1.8">
-      <rect x="4" y="8" width="24" height="16" rx="2" />
-      <path d="M28 12h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-6" />
-      <path d="M8 8V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3" />
-      <circle cx="10" cy="24" r="2" />
-      <circle cx="32" cy="24" r="2" />
+    <svg width="40" height="28" viewBox="0 0 40 28" fill="none">
+      <path
+        d="M3 20V7a2 2 0 0 1 2-2h22a2 2 0 0 1 2 2v3l6 3v5a2 2 0 0 1-2 2h-2"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M3 20h4M26 20h6"
+        stroke="#101828"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M5 5h20v-2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v2Z"
+        stroke="#101828"
+        strokeWidth="1.5"
+      />
+      <circle cx="10" cy="21" r="3" stroke="#101828" strokeWidth="1.5" />
+      <circle cx="23" cy="21" r="3" stroke="#101828" strokeWidth="1.5" />
+      <path d="M13 21h7" stroke="#101828" strokeWidth="1.5" />
     </svg>
   ),
 };
 
-const equipmentFilters = [
-  { key: 'AC', label: 'AC', icon: icons.ac },
-  { key: 'transmission', label: 'Automatic', icon: icons.automatic, value: 'automatic' },
-  { key: 'kitchen', label: 'Kitchen', icon: icons.kitchen },
-  { key: 'TV', label: 'TV', icon: icons.tv },
-  { key: 'bathroom', label: 'Bathroom', icon: icons.bathroom },
-];
+interface FiltersProps {
+  onSearch: (filters: Filters) => void;
+}
 
-const vehicleTypes = [
-  { key: 'panelTruck', label: 'Van', icon: icons.van },
-  { key: 'fullyIntegrated', label: 'Fully Integrated', icon: icons.fullyIntegrated },
-  { key: 'alcove', label: 'Alcove', icon: icons.alcove },
-];
+const FiltersComponent = ({ onSearch }: FiltersProps) => {
+  const [location, setLocation] = useState("");
+  const [form, setForm] = useState<Filters["form"]>(undefined);
+  const [equipment, setEquipment] = useState({
+    AC: false,
+    transmission: false,
+    kitchen: false,
+    TV: false,
+    bathroom: false,
+  });
 
-const Filters = () => {
-  const { filters, setFilters, fetchCampers, isLoading } = useCampersStore();
-  const [localFilters, setLocalFilters] = useState<FiltersType>(filters);
+  const handleEquipmentToggle = (key: keyof typeof equipment) => {
+    setEquipment((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
-  const handleLocationChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalFilters((prev) => ({ ...prev, location: e.target.value }));
-  }, []);
+  const handleFormToggle = (value: Filters["form"]) => {
+    setForm(form === value ? undefined : value);
+  };
 
-  const handleEquipmentToggle = useCallback((key: string, value?: string) => {
-    setLocalFilters((prev) => {
-      if (key === 'transmission') {
-        return {
-          ...prev,
-          transmission: prev.transmission === value ? '' : (value as 'automatic' | 'manual'),
-        };
-      }
-      return {
-        ...prev,
-        [key]: !prev[key as keyof FiltersType],
-      };
-    });
-  }, []);
+  const handleSearch = () => {
+    const filters: Filters = {};
 
-  const handleVehicleTypeSelect = useCallback((type: string) => {
-    setLocalFilters((prev) => ({
-      ...prev,
-      form: prev.form === type ? '' : (type as FiltersType['form']),
-    }));
-  }, []);
+    if (location.trim()) filters.location = location.trim();
+    if (form) filters.form = form;
+    if (equipment.AC) filters.AC = true;
+    if (equipment.transmission) filters.transmission = "automatic";
+    if (equipment.kitchen) filters.kitchen = true;
+    if (equipment.TV) filters.TV = true;
+    if (equipment.bathroom) filters.bathroom = true;
 
-  const handleSearch = useCallback(() => {
-    setFilters(localFilters);
-    fetchCampers(true);
-  }, [localFilters, setFilters, fetchCampers]);
+    onSearch(filters);
+  };
 
   return (
-    <aside className={styles.sidebar}>
+    <aside className={styles.filters}>
       {/* Location */}
       <div className={styles.section}>
         <label className={styles.label}>Location</label>
@@ -127,71 +204,101 @@ const Filters = () => {
           <input
             type="text"
             placeholder="City"
-            value={localFilters.location || ''}
-            onChange={handleLocationChange}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             className={styles.input}
           />
         </div>
       </div>
 
-      {/* Filters Label */}
       <p className={styles.filtersLabel}>Filters</p>
 
       {/* Vehicle Equipment */}
       <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>Vehicle equipment</h3>
+        <h3 className={styles.title}>Vehicle equipment</h3>
         <div className={styles.divider} />
-        <div className={styles.filterGrid}>
-          {equipmentFilters.map((filter) => {
-            const isActive =
-              filter.key === 'transmission'
-                ? localFilters.transmission === filter.value
-                : localFilters[filter.key as keyof FiltersType];
-
-            return (
-              <button
-                key={filter.key}
-                className={`${styles.filterBtn} ${isActive ? styles.active : ''}`}
-                onClick={() => handleEquipmentToggle(filter.key, filter.value)}
-                type="button"
-              >
-                <span className={styles.filterIcon}>{filter.icon}</span>
-                <span className={styles.filterText}>{filter.label}</span>
-              </button>
-            );
-          })}
+        <div className={styles.checkboxGrid}>
+          <button
+            type="button"
+            className={`${styles.checkbox} ${equipment.AC ? styles.active : ""}`}
+            onClick={() => handleEquipmentToggle("AC")}
+          >
+            {icons.ac}
+            <span>AC</span>
+          </button>
+          <button
+            type="button"
+            className={`${styles.checkbox} ${equipment.transmission ? styles.active : ""}`}
+            onClick={() => handleEquipmentToggle("transmission")}
+          >
+            {icons.automatic}
+            <span>Automatic</span>
+          </button>
+          <button
+            type="button"
+            className={`${styles.checkbox} ${equipment.kitchen ? styles.active : ""}`}
+            onClick={() => handleEquipmentToggle("kitchen")}
+          >
+            {icons.kitchen}
+            <span>Kitchen</span>
+          </button>
+          <button
+            type="button"
+            className={`${styles.checkbox} ${equipment.TV ? styles.active : ""}`}
+            onClick={() => handleEquipmentToggle("TV")}
+          >
+            {icons.tv}
+            <span>TV</span>
+          </button>
+          <button
+            type="button"
+            className={`${styles.checkbox} ${equipment.bathroom ? styles.active : ""}`}
+            onClick={() => handleEquipmentToggle("bathroom")}
+          >
+            {icons.bathroom}
+            <span>Bathroom</span>
+          </button>
         </div>
       </div>
 
       {/* Vehicle Type */}
       <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>Vehicle type</h3>
+        <h3 className={styles.title}>Vehicle type</h3>
         <div className={styles.divider} />
-        <div className={styles.filterGrid}>
-          {vehicleTypes.map((type) => (
-            <button
-              key={type.key}
-              className={`${styles.filterBtn} ${localFilters.form === type.key ? styles.active : ''}`}
-              onClick={() => handleVehicleTypeSelect(type.key)}
-              type="button"
-            >
-              <span className={styles.filterIcon}>{type.icon}</span>
-              <span className={styles.filterText}>{type.label}</span>
-            </button>
-          ))}
+        <div className={styles.checkboxGrid}>
+          <button
+            type="button"
+            className={`${styles.checkbox} ${form === "panelTruck" ? styles.active : ""}`}
+            onClick={() => handleFormToggle("panelTruck")}
+          >
+            {icons.van}
+            <span>Van</span>
+          </button>
+          <button
+            type="button"
+            className={`${styles.checkbox} ${form === "fullyIntegrated" ? styles.active : ""}`}
+            onClick={() => handleFormToggle("fullyIntegrated")}
+          >
+            {icons.fullyIntegrated}
+            <span>Fully Integrated</span>
+          </button>
+          <button
+            type="button"
+            className={`${styles.checkbox} ${form === "alcove" ? styles.active : ""}`}
+            onClick={() => handleFormToggle("alcove")}
+          >
+            {icons.alcove}
+            <span>Alcove</span>
+          </button>
         </div>
       </div>
 
       {/* Search Button */}
-      <button
-        className={styles.searchBtn}
-        onClick={handleSearch}
-        disabled={isLoading}
-      >
-        {isLoading ? 'Searching...' : 'Search'}
+      <button className={styles.searchBtn} onClick={handleSearch}>
+        Search
       </button>
     </aside>
   );
 };
 
-export default Filters;
+export default FiltersComponent;

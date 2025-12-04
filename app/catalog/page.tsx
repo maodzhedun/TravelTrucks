@@ -1,11 +1,17 @@
 // app/catalog/page.tsx
 
-import { getCampers } from "@/lib/api";
+import { fetchCampers } from "@/lib/api/serverApi";
 import CatalogClient from "./CatalogClient";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TravelTrucks - Catalog",
+  description: "Browse our collection of campervans and motorhomes for rent.",
+};
 
 export default async function CatalogPage() {
-  // Дані завантажуються на сервері
-  const data = await getCampers({}, 1, 4);
+  // Fetch initial data on server
+  const data = await fetchCampers({}, 1, 4);
 
   return (
     <CatalogClient initialCampers={data.items} initialTotal={data.total} />

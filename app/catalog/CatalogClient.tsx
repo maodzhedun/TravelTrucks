@@ -1,11 +1,13 @@
 // app/catalog/CatalogClient.tsx
+
 "use client";
 
-import { useEffect, useCallback } from "react";
-import { Camper } from "@/types/camper";
-import { useCampersStore } from "@/store/useCampersStore";
-import Filters from "@/components/Filters/Filters";
+import { useState } from "react";
+import { Camper, Filters } from "@/types/camper";
+import { fetchCampers } from "@/lib/api/clientApi";
+import FiltersComponent from "@/components/Filters/Filters";
 import CamperList from "@/components/CamperList/CamperList";
+import Loader from "@/components/Loader/Loader";
 import styles from "./page.module.css";
 
 interface CatalogClientProps {
@@ -17,27 +19,77 @@ export default function CatalogClient({
   initialCampers,
   initialTotal,
 }: CatalogClientProps) {
-  const { campers, setCampers, setTotal } = useCampersStore();
+  const [campers, setCampers] = useState<Camper[]>(initialCampers);
+  const [total, setTotal] = useState(initialTotal);
+  const [page, setPage] = useState(1);
+  const [filters, setFilters] = useState<Filters>({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Ініціалізувати store даними з сервера
-  useEffect(() => {
-    if (campers.length === 0 && initialCampers.length > 0) {
-      setCampers(initialCampers);
-      setTotal(initialTotal);
+  // Search with new filters - backend filtering
+  const handleSearch = async (newFilters: Filters) => {
+    setIsLoading(true);
+    // Reset previous results before new search (РўР— requirement)
+    setCampers([]);
+    setFilters(newFilters);
+
+    try {
+      // Backend handles filtering
+      const data = await fetchCampers(newFilters, 1, 4);
+      setCampers(data.items);
+      setTotal(data.total);
+      setPage(1);
+    } catch (error) {
+      console.error("Error fetching campers:", error);
+    } finally {
+      setIsLoading(false);
     }
-  }, [initialCampers, initialTotal, campers.length, setCampers, setTotal]);
+  };
 
-  // Використовуємо дані зі store, або початкові з сервера
-  const displayCampers = campers.length > 0 ? campers : initialCampers;
-  const displayTotal =
-    campers.length > 0 ? useCampersStore.getState().total : initialTotal;
+  // Load more - backend pagination
+  const handleLoadMore = async () => {
+    setIsLoading(true);
+    const nextPage = page + 1;
+
+    try {
+      // Backend handles pagination with current filters
+      const data = await fetchCampers(filters, nextPage, 4);
+      setCampers((prev) => [...prev, ...data.items]);
+      setPage(nextPage);
+    } catch (error) {
+      console.error("Error loading more:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const hasMore = campers.length < total;
 
   return (
-    <div className={styles.page}>
+    <section className={styles.page}>
       <div className={styles.container}>
-        <Filters />
-        <CamperList campers={displayCampers} total={displayTotal} />
+        <FiltersComponent onSearch={handleSearch} />
+
+        <div className={styles.content}>
+          {campers.length > 0 ? (
+            <CamperList campers={campers} />
+          ) : !isLoading ? (
+            <div className={styles.empty}>
+              <h3>No campers found</h3>
+              <p>Try adjusting your filters to find more results.</p>
+            </div>
+          ) : null}
+
+          {isLoading && <Loader />}
+
+          {hasMore && !isLoading && (
+            <div className={styles.loadMoreWrapper}>
+              <button className={styles.loadMoreBtn} onClick={handleLoadMore}>
+                Load more
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
