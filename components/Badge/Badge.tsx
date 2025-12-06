@@ -1,17 +1,16 @@
-import { ReactNode } from 'react';
 import styles from './Badge.module.css';
 
 interface BadgeProps {
-  children: ReactNode;
-  icon?: ReactNode;
+  icon: React.ReactNode;
+  children: React.ReactNode;
 }
 
-const Badge = ({ children, icon }: BadgeProps) => {
+const Badge = ({ icon, children }: BadgeProps) => {
   return (
-    <span className={styles.badge}>
-      {icon && <span className={styles.icon}>{icon}</span>}
+    <div className={styles.badge}>
+      <span className={styles.icon}>{icon}</span>
       <span className={styles.text}>{children}</span>
-    </span>
+    </div>
   );
 };
 

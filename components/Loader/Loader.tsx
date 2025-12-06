@@ -7,13 +7,17 @@ interface LoaderProps {
 const Loader = ({ fullPage = false }: LoaderProps) => {
   if (fullPage) {
     return (
-      <div className={styles.fullPage}>
-        <div className={styles.loader} />
+      <div className={styles.overlay}>
+        <div className={styles.spinner} />
       </div>
     );
   }
 
-  return <div className={styles.loader} />;
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.spinner} />
+    </div>
+  );
 };
 
 export default Loader;

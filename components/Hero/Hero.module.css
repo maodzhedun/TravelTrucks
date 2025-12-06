@@ -1,10 +1,12 @@
 /* Hero.module.css */
+
 .hero {
   position: relative;
   display: flex;
   align-items: center;
-  height: 590px; /* Фіксована висота як в макеті */
-  background-image: url('/Hero.jpg');
+  height: calc(100vh - 80px);
+  min-height: 600px; 
+  background-image: url("/Hero.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -24,9 +26,9 @@
   font-weight: 600;
   color: var(--color-white);
   margin-bottom: var(--space-16);
-  max-width: 600px; /* Збільшено щоб заголовок був в один рядок */
+  max-width: 600px;
   line-height: 1.15;
-  white-space: nowrap; /* Запобігає переносу */
+  white-space: nowrap;
 }
 
 .subtitle {

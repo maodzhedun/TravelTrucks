@@ -1,3 +1,16 @@
+// Types for Camper data structure
+
+export interface GalleryImage {
+  thumb: string;
+  original: string;
+}
+
+export interface Review {
+  reviewer_name: string;
+  reviewer_rating: number;
+  comment: string;
+}
+
 export interface Camper {
   id: string;
   name: string;
@@ -22,6 +35,8 @@ export interface Camper {
   microwave: boolean;
   gas: boolean;
   water: boolean;
+  gallery: GalleryImage[];
+  reviews: Review[];
 }
 
 export interface CampersResponse {
@@ -29,10 +44,10 @@ export interface CampersResponse {
   items: Camper[];
 }
 
-// Filter types
+// Filter types for backend filtering
 export interface Filters {
   location?: string;
-  form?: "alcove" | "fullyIntegrated" | "panelTruck" | "";
+  form?: "alcove" | "fullyIntegrated" | "panelTruck";
   AC?: boolean;
   bathroom?: boolean;
   kitchen?: boolean;
@@ -42,20 +57,12 @@ export interface Filters {
   microwave?: boolean;
   gas?: boolean;
   water?: boolean;
-  transmission?: "automatic" | "manual" | "";
-}
-
-// Booking form data
-export interface BookingFormData {
-  name: string;
-  email: string;
-  bookingDate: Date | null;
-  comment: string;
+  transmission?: "automatic" | "manual";
 }
 
 // Form types for display
 export const FORM_TYPES: Record<string, string> = {
   alcove: "Alcove",
   fullyIntegrated: "Fully Integrated",
-  panelTruck: "Panel Truck",
+  panelTruck: "Van",
 };

@@ -1,14 +1,10 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import styles from './BookingForm.module.css';
 
-interface BookingFormProps {
-  camperName: string;
-}
-
-const BookingForm = ({ camperName }: BookingFormProps) => {
+const BookingForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,19 +20,18 @@ const BookingForm = ({ camperName }: BookingFormProps) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validation
     if (!formData.name.trim()) {
       toast.error('Please enter your name');
       return;
     }
-
     if (!formData.email.trim() || !formData.email.includes('@')) {
       toast.error('Please enter a valid email');
       return;
     }
-
     if (!formData.bookingDate) {
       toast.error('Please select a booking date');
       return;
@@ -47,7 +42,7 @@ const BookingForm = ({ camperName }: BookingFormProps) => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    toast.success(`Successfully booked ${camperName}!`);
+    toast.success('Booking successful! We will contact you soon.');
 
     // Reset form
     setFormData({
@@ -60,16 +55,17 @@ const BookingForm = ({ camperName }: BookingFormProps) => {
     setIsSubmitting(false);
   };
 
+  // Get today's date for min attribute
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <div className={styles.form}>
       <h3 className={styles.title}>Book your campervan now</h3>
       <p className={styles.subtitle}>
         Stay connected! We are always ready to help you.
       </p>
 
-      <div className={styles.fields}>
+      <form onSubmit={handleSubmit} className={styles.formContent}>
         <input
           type="text"
           name="name"
@@ -77,6 +73,7 @@ const BookingForm = ({ camperName }: BookingFormProps) => {
           value={formData.name}
           onChange={handleChange}
           className={styles.input}
+          required
         />
 
         <input
@@ -86,17 +83,25 @@ const BookingForm = ({ camperName }: BookingFormProps) => {
           value={formData.email}
           onChange={handleChange}
           className={styles.input}
+          required
         />
 
-        <input
-          type="date"
-          name="bookingDate"
-          placeholder="Booking date*"
-          value={formData.bookingDate}
-          onChange={handleChange}
-          className={styles.input}
-          min={today}
-        />
+        <div className={styles.dateWrapper}>
+          <input
+            type="text"
+            name="bookingDate"
+            placeholder="Booking date*"
+            value={formData.bookingDate}
+            onFocus={(e) => (e.target.type = 'date')}
+            onBlur={(e) => {
+              if (!e.target.value) e.target.type = 'text';
+            }}
+            onChange={handleChange}
+            min={today}
+            className={styles.input}
+            required
+          />
+        </div>
 
         <textarea
           name="comment"
@@ -106,16 +111,16 @@ const BookingForm = ({ camperName }: BookingFormProps) => {
           className={styles.textarea}
           rows={4}
         />
-      </div>
 
-      <button
-        type="submit"
-        className={styles.submitBtn}
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? 'Sending...' : 'Send'}
-      </button>
-    </form>
+        <button
+          type="submit"
+          className={styles.submitBtn}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Sending...' : 'Send'}
+        </button>
+      </form>
+    </div>
   );
 };
 

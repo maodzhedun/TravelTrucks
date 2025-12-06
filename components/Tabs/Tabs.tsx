@@ -6,18 +6,16 @@ import styles from './Tabs.module.css';
 interface Tab {
   id: string;
   label: string;
-  content: ReactNode;
 }
 
 interface TabsProps {
   tabs: Tab[];
   defaultTab?: string;
+  children: (activeTab: string) => ReactNode;
 }
 
-const Tabs = ({ tabs, defaultTab }: TabsProps) => {
+const Tabs = ({ tabs, defaultTab, children }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
-
-  const activeContent = tabs.find((tab) => tab.id === activeTab)?.content;
 
   return (
     <div className={styles.tabs}>
@@ -34,7 +32,7 @@ const Tabs = ({ tabs, defaultTab }: TabsProps) => {
         ))}
       </div>
       <div className={styles.divider} />
-      <div className={styles.content}>{activeContent}</div>
+      <div className={styles.content}>{children(activeTab)}</div>
     </div>
   );
 };

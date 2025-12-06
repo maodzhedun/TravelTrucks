@@ -1,7 +1,9 @@
 // app/catalog/page.tsx
 
+import { Suspense } from "react";
 import { fetchCampers } from "@/lib/api/serverApi";
 import CatalogClient from "./CatalogClient";
+import Loader from "@/components/Loader/Loader";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,11 +11,18 @@ export const metadata: Metadata = {
   description: "Browse our collection of campervans and motorhomes for rent.",
 };
 
-export default async function CatalogPage() {
-  // Fetch initial data on server
+async function CatalogContent() {
   const data = await fetchCampers({}, 1, 4);
 
   return (
     <CatalogClient initialCampers={data.items} initialTotal={data.total} />
+  );
+}
+
+export default function CatalogPage() {
+  return (
+    <Suspense fallback={<Loader fullPage />}>
+      <CatalogContent />
+    </Suspense>
   );
 }

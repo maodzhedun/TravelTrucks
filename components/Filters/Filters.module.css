@@ -1,6 +1,9 @@
-.sidebar {
+.filters {
   width: 360px;
   flex-shrink: 0;
+  position: sticky;
+  top: var(--space-48);
+  height: fit-content;
 }
 
 .section {
@@ -27,38 +30,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
 }
 
 .input {
   width: 100%;
   height: 56px;
   padding: 0 var(--space-18) 0 48px;
+  background-color: var(--color-inputs);
+  border-radius: var(--radius-12);
   font-size: var(--text-16);
   color: var(--color-main);
-  background-color: var(--color-inputs);
-  border: none;
-  border-radius: var(--radius-12);
-  transition: box-shadow var(--transition);
 }
 
 .input::placeholder {
   color: var(--color-text-muted);
 }
 
-.input:focus {
-  outline: none;
-  box-shadow: 0 0 0 1px var(--color-border);
-}
-
 .filtersLabel {
   font-size: var(--text-16);
   font-weight: 500;
   color: var(--color-text-muted);
-  margin-bottom: var(--space-32);
+  margin-bottom: var(--space-24);
 }
 
-.sectionTitle {
+.title {
   font-size: var(--text-20);
   font-weight: 600;
   color: var(--color-main);
@@ -66,54 +61,44 @@
 }
 
 .divider {
-  width: 100%;
   height: 1px;
   background-color: var(--color-border);
   margin-bottom: var(--space-24);
 }
 
-.filterGrid {
+.checkboxGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-10);
+  gap: var(--space-12);
 }
 
-.filterBtn {
+.checkbox {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-8);
-  min-width: 100px;
+  width: 100px;
   height: 96px;
-  padding: var(--space-16);
-  background-color: var(--color-white);
+  background-color: transparent;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-12);
   cursor: pointer;
   transition: border-color var(--transition);
 }
 
-.filterBtn:hover {
+.checkbox:hover {
   border-color: var(--color-primary);
 }
 
-.filterBtn.active {
+.checkbox.active {
   border-color: var(--color-primary);
 }
 
-.filterIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.filterText {
-  font-size: var(--text-16);
+.checkbox span {
+  font-size: var(--text-14);
   font-weight: 500;
   color: var(--color-main);
-  text-align: center;
-  line-height: 1.25;
 }
 
 .searchBtn {
@@ -121,22 +106,15 @@
   align-items: center;
   justify-content: center;
   height: 56px;
-  padding: 0 var(--space-48);
+  padding: 0 var(--space-40);
+  background-color: var(--color-primary);
+  color: var(--color-white);
   font-size: var(--text-16);
   font-weight: 500;
-  color: var(--color-white);
-  background-color: var(--color-primary);
-  border: none;
   border-radius: var(--radius-200);
-  cursor: pointer;
   transition: background-color var(--transition);
 }
 
-.searchBtn:hover:not(:disabled) {
+.searchBtn:hover {
   background-color: var(--color-primary-hover);
-}
-
-.searchBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
