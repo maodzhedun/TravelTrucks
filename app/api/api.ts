@@ -10,5 +10,4 @@ export type ApiError = AxiosError<{ error: string }>;
 // Axios instance configured for MockAPI
 export const api = axios.create({
   baseURL,
-  withCredentials: true,
 });
