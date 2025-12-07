@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TravelTrucks 🚐
 
-## Getting Started
+A modern web application for camper rental, built with Next.js 16, TypeScript, and Zustand.
 
-First, run the development server:
+## Live Demo & Backend
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Live Demo (Vercel):** https://travel-trucks.vercel.app  
+- **Backend (MockAPI):** https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers
+
+## Features
+
+- **Home Page** – Hero section with call-to-action  
+- **Catalog Page** – Camper catalog with backend filtering  
+- **Camper Details** – Features, reviews, and booking form  
+- **Backend Filtering** – All filtering and pagination handled by the API  
+- **Favorites** – Save campers to favorites (persisted in localStorage)  
+- **Responsive** – Optimized for desktop viewing  
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)  
+- **Language:** TypeScript  
+- **State Management:** Zustand  
+- **API:** Next.js Route Handlers  
+- **Styling:** CSS Modules  
+- **Notifications:** React Hot Toast  
+
+## Architecture
+
+### Route Handlers as API Proxy
+
+The app uses **Next.js Route Handlers** as a proxy layer to MockAPI:
+
+# Architecture
+
+### Route Handlers
+
+The app uses Next.js Route Handlers as an API layer:
+
+```
+Client Component → /api/campers → MockAPI
+Server Component → /api/campers → MockAPI
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Benefits:
+- **Security**: MockAPI URL hidden from client
+- **Caching**: Built-in Next.js caching
+- **Flexibility**: Easy to add middleware, validation, error handling
+- **Consistency**: Single source of truth for API calls
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/travel-trucks.git
 
-## Learn More
+# Navigate to project directory
+cd travel-trucks
 
-To learn more about Next.js, take a look at the following resources:
+# Install dependencies
+npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Run development server
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deploy on Vercel
+## Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 💼 LinkedIn: [Vladyslav Bilonoh](https://www.linkedin.com/in/vladyslavbilonoh/)
