@@ -6,6 +6,8 @@ import CatalogClient from "./CatalogClient";
 import Loader from "@/components/Loader/Loader";
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "TravelTrucks - Catalog",
   description: "Browse our collection of campervans and motorhomes for rent.",

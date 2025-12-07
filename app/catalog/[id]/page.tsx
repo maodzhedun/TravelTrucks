@@ -5,6 +5,8 @@ import Loader from "@/components/Loader/Loader";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 type Props = {
   params: Promise<{ id: string }>;
 };
